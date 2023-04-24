@@ -13,7 +13,6 @@ const Flex = styled.div`
   flex: 1;
   align-items: center;
   justify-content: center;
-  background-color: red;
 `;
 
 const Spinner = styled.div`
@@ -24,7 +23,7 @@ const Spinner = styled.div`
   height: 80px;
   animation: spin 2s linear infinite;
   animation-name: ${Spin};
-  animation-duration: 8s;
+  animation-duration: 4s;
   animation-iteration-count: infinite;
 `;
 

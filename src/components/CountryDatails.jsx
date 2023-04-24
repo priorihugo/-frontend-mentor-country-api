@@ -67,7 +67,7 @@ const Wrapper = styled.div`
 
 const Button = styled.div`
   display: flex;
-  justify-items: center;
+  align-items: center;
   background-color: white;
 
   padding: 4px;
@@ -76,82 +76,115 @@ const Button = styled.div`
   box-shadow: 15px rgba(0, 0, 0, 0.2);
 `;
 
+function getOfficialName(nativeNameObj) {
+  if (!nativeNameObj) {
+    return "";
+  }
+  let nativeNameArr = Object.values(nativeNameObj);
+  return nativeNameArr[0]?.official;
+}
+
+function getCurrencies(currenciesObj) {
+  if (!currenciesObj) {
+    return "";
+  }
+  let currenciesArr = Object.values(currenciesObj);
+  let nameAndSymbol = currenciesArr.map(
+    (item) => item?.name + " " + item?.symbol
+  );
+  return nameAndSymbol.join(", ");
+}
+
+function getLanguages(languagesObj) {
+  if (!languagesObj) {
+    return "";
+  }
+  let languagesArr = Object.values(languagesObj);
+  return languagesArr.join(", ");
+}
+
 function CountryDetails() {
   const { name } = useParams();
   const [country, setCountry] = useState({});
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
+
     fetch(`https://restcountries.com/v3.1/name/${name}`)
       .then((response) => {
-        console.log(response);
         return response.json();
       })
       .then((json) => {
         console.log("json ", json);
         setCountry(json[0]);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
   return (
     <Wrapper>
-      <div>
-        <Button>
+      {isLoading ? (
+        <></>
+      ) : (
+        <div>
+          <Button>
+            <Link to={"/"}>
+              <ArrowBackIcon />
+              Back
+            </Link>
+          </Button>
 
-            Back
-  
-        </Button>
-
-        <div className="country_info">
-          <div className="image">
-            <img src={country?.flags?.png} alt={country?.flags?.alt} />
-          </div>
-
-          <div className="info">
-            <h1>{country?.name?.common}</h1>
-            <div className="col_1">
-              <p>
-                <span>Native Name: </span>
-                {country?.name?.nativeName?.swe?.official}
-              </p>
-              <p>
-                <span>Population: </span>
-                {country?.population}
-              </p>
-
-              <p>
-                <span>Region: </span>
-                {country?.region}
-              </p>
-              <p>
-                <span>Subregion: </span>
-                {country?.subregion}
-              </p>
-              <p>
-                <span>Capital: </span>
-                {country?.capital?.map((item) => (
-                  <p>{item}</p>
-                ))}
-              </p>
+          <div className="country_info">
+            <div className="image">
+              <img src={country?.flags?.png} alt={country?.flags?.alt} />
             </div>
-            <div className="col_2">
-              <p>
-                <span>Top Level Domain: </span>
-                {country?.tld?.map((item) => item)}
-              </p>
-              <p>
-                <span>Currencies: </span>
-                {Object.keys(country?.currencies).map((item) => {
-                  return country?.currencies[item]?.name;
-                })}
-              </p>
-              <p>
-                <span>Languages: </span>
-                {Object.values(country?.languages)?.map((item) => item)}
-              </p>
+
+            <div className="info">
+              <h1>{country?.name?.common}</h1>
+              <div className="col_1">
+                <p>
+                  <span>Native Name: </span>
+                  {getOfficialName(country?.name?.nativeName)}
+                </p>
+                <p>
+                  <span>Population: </span>
+                  {country?.population}
+                </p>
+
+                <p>
+                  <span>Region: </span>
+                  {country?.region}
+                </p>
+                <p>
+                  <span>Subregion: </span>
+                  {country?.subregion}
+                </p>
+                <p>
+                  <span>Capital: </span>
+                  {country?.capital?.join(" , ")}
+                </p>
+              </div>
+              <div className="col_2">
+                <p>
+                  <span>Top Level Domain: </span>
+                  {country?.tld?.join(", ")}
+                </p>
+                <p>
+                  <span>Currencies: </span>
+                  {getCurrencies(country?.currencies)}
+                </p>
+                <p>
+                  <span>Languages: </span>
+                  {getLanguages(country?.languages)}
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </Wrapper>
   );
 }
