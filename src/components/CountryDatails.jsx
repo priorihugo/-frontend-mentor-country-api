@@ -12,9 +12,7 @@ const Wrapper = styled.div`
   & .country_info {
     display: flex;
     flex-direction: row;
-
     justify-content: space-between;
-
     gap: 100px;
     margin-top: 20px;
   }
@@ -63,6 +61,23 @@ const Wrapper = styled.div`
     margin: 4px 0;
     padding: 0;
   }
+  @media (max-width: 650px) {
+    flex-direction: column;
+
+    & .info{
+        width: 90%;
+        flex-direction: column;
+    }
+    & .country_info{
+      width: 90%;
+      flex-direction: column;
+    }
+
+
+  }
+
+
+
 `;
 
 const Button = styled.div`
