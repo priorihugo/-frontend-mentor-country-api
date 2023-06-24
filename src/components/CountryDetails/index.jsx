@@ -70,7 +70,14 @@ function CountryDetails() {
 
           <div className="country_info">
             <div className="image">
-              <img src={country?.flags?.png} alt={country?.flags?.alt} />
+              <img
+                src={
+                  country?.flags?.svg
+                    ? country?.flags?.svg
+                    : country?.flags?.png
+                }
+                alt={country?.flags?.alt}
+              />
             </div>
 
             <div className="info">
