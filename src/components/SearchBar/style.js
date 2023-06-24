@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import Input from "./Input";
-import Filter from "./Filter";
 
-const Wrapper = styled.div`
+
+export const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -24,14 +23,3 @@ const Wrapper = styled.div`
 
   padding: 40px;
 `;
-
-function SearchBar() {
-  return (
-    <Wrapper>
-      <Input />
-      <Filter />
-    </Wrapper>
-  );
-}
-
-export default SearchBar;

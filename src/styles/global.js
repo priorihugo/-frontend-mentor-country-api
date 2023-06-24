@@ -1,7 +1,13 @@
+import { createGlobalStyle } from "styled-components";
+
+export default createGlobalStyle`
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  min-height: 100vh;
+  background-color: ${({theme})=>theme.colors.background};
+  color: ${({theme})=>theme.colors.text};
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -13,3 +19,6 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+`;
